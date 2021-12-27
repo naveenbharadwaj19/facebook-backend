@@ -1,0 +1,29 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "google"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        // * off
+        "linebreak-style" : "off",
+        "quotes" : "off",
+        "object-curly-spacing" : "off",
+        "eol-last" : "off",
+        "new-cap" : "off",
+        "max-len" : "off",
+        "indent" : "off",
+        "curly" : "off",
+        "no-var" : "off",
+        // ? warn
+        "no-unused-vars" : "warn",
+        "eqeqeq" : "warn"
+        // ! error
+    }
+}
