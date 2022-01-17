@@ -15,3 +15,13 @@ export const userLogInSchema = Joi.object({
   email_address: Joi.string().min(4).email().required(),
   password: Joi.string().min(6).trim().required(),
 });
+
+export const UserProfilePhotosSchema = Joi.object({
+  _id: Joi.string().required(),
+  photo_name: Joi.string().required(),
+  url: Joi.string()
+    .regex(/\b(http|https)/)
+    .required(),
+  upload_time: Joi.date().default(Date.now()),
+  no_of_likes: Joi.number().integer().required(),
+});

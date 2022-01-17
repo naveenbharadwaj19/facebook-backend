@@ -24,3 +24,53 @@ export async function storeUser(body) {
   await client.close();
   return user;
 }
+/**
+ * store user profile metadata in db
+ * @param  {String} body req body
+ */
+export async function storeUserProfileImageDb(body) {
+  try {
+    const collection = "profile-photos";
+    await client.connect();
+    const queryPhoto = await db
+      .collection(collection)
+      .findOne({ _id: body._id });
+
+    if (queryPhoto === null || typeof queryPhoto === "undefined") {
+      // creating a document data
+      let document = {
+        _id: body._id,
+        photos: [
+          {
+            photo_id: 1,
+            photo_name: body.photo_name,
+            url: body.url,
+            uploaded_time: body.upload_time,
+            no_of_likes: body.no_of_likes,
+          },
+        ],
+        total_photos: 1,
+      };
+      await db.collection(collection).insertOne(document);
+      console.log("No document found.Created one");
+    } else if (queryPhoto !== null) {
+      let photo = {
+        photo_id: queryPhoto.photos.length + 1,
+        photo_name: body.photo_name,
+        url: body.url,
+        uploaded_time: body.upload_time,
+        no_of_likes: body.no_of_likes,
+      };
+      let totalPhotos = queryPhoto.total_photos + 1;
+
+      await db.collection(collection).updateOne(queryPhoto, {
+        $push: { photos: photo },
+        $set: { total_photos: totalPhotos },
+      });
+      console.log("Document found.Updated");
+    }
+    await client.close();
+  } catch (error) {
+    console.log("Error in storeUserProfileImageDb " + error.message);
+  }
+}

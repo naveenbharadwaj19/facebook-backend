@@ -21,9 +21,11 @@
         "indent" : "off",
         "curly" : "off",
         "no-var" : "off",
+        "comma-dangle" : "off",
         // ? warn
         "no-unused-vars" : "warn",
-        "eqeqeq" : "warn"
+        "eqeqeq" : "warn",
+        "prefer-const": "off"
         // ! error
     }
 }
