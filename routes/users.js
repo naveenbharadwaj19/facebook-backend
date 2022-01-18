@@ -82,8 +82,6 @@ route.get("/profile/photos", async (req, res) => {
 });
 
 route.delete("/profile/:id", async (req, res) => {
-  // TODO delete user data
-  // TODO delete photos data
   let documentsDeleted = await deleteUserDB(req.params.id);
   if (documentsDeleted === 0) return resJson(res, 400, "No documents found");
   resJson(res, 200, `Id ${req.params.id} related documents deleted all over the db`);
