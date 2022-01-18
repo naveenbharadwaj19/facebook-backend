@@ -74,3 +74,19 @@ export async function storeUserProfileImageDb(body) {
     console.log("Error in storeUserProfileImageDb " + error.message);
   }
 }
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * delete user related documents in db
+ * @param  {String} id - id of the document
+ */
+export async function deleteUserDB(id) {
+  await client.connect();
+  let userResult = await db.collection("users").deleteMany({ _id: id });
+  let photoResult = await db
+    .collection("profile-photos")
+    .deleteMany({ _id: id });
+  let documentsDeleted = userResult.deletedCount + photoResult.deletedCount;
+  console.log(`Documents deleted : ${documentsDeleted}`);
+  return documentsDeleted;
+}
